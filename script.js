@@ -5,7 +5,7 @@ let secretNumber = Math.trunc(Math.random() * 20 + 1);
 let score = 20;
 let highscore = 0;
 
-const displyMessage = message => {
+const displayMessage = message => {
   document.querySelector('.message').textContent = message;
 };
 
@@ -15,14 +15,12 @@ document.querySelector('.check').addEventListener('click', function () {
 
   // when there is not suitable input
   if (!guess) {
-    displyMessage(`⛔️ No a valid number`);
+    displayMessage(`⛔️ No a valid number`);
 
     // when player wins
   } else if (guess === secretNumber) {
-    displyMessage('Correct number! 🎉');
+    displayMessage('Correct number! 🎉');
     document.querySelector('.number').textContent = secretNumber;
-    score++;
-    document.querySelector('.score').textContent = score;
     document.querySelector('body').style.backgroundColor = '#60b347';
     document.querySelector('.number').style.width = '30rem';
 
@@ -30,29 +28,15 @@ document.querySelector('.check').addEventListener('click', function () {
       highscore = score;
       document.querySelector('.highscore').textContent = highscore;
     }
-    // when guess is to high
-  } else if (guess > secretNumber) {
-    displyMessage('⬇️ try a lower number!!');
-    score--;
-    document.querySelector('.score').textContent = score;
-    if (score > 0) {
-      displyMessage('⬇️ try a lower number!!');
+    // when guess is wrong
+  } else if (guess !== secretNumber) {
+    if (score > 1) {
+      displayMessage(guess > secretNumber ? '⬇️ try a lower number!!' : '⬆️ try a higher number!!');
+      score--;
       document.querySelector('.score').textContent = score;
     } else {
+      displayMessage('❌ Sorry, you have lost this game, Try again!!');
       document.querySelector('.score').textContent = 0;
-      displyMessage('❌ Sorry, you have lost this game, Try again!!');
-    }
-    // when guess is too low
-  } else if (guess < secretNumber) {
-    displyMessage('⬆️ try a higher number!!');
-    score--;
-    document.querySelector('.score').textContent = score;
-    if (score > 0) {
-      displyMessage('⬆️ try a higher number!!');
-      document.querySelector('.score').textContent = score;
-    } else {
-      document.querySelector('.score').textContent = 0;
-      displyMessage('❌ Sorry, you have lost this game, Try again!!');
     }
   }
 });
